@@ -1,0 +1,14 @@
+fastapi
+uvicorn
+psycopg2-binary
+ollama
+phidata[pdf,pgvector]
+python-dotenv
+pydantic
+pypdf
+PyMuPDF
+python-multipart
+sqlalchemy
+pdf2image
+pillow
+ebooklib
