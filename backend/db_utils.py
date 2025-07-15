@@ -3,6 +3,7 @@ import uuid
 from typing import List, Dict, Any, Optional
 import logging
 from uuid import UUID
+from config import DATABASE_URL
 
 # Configure logging
 logger = logging.getLogger(__name__)
@@ -12,7 +13,7 @@ def get_document_list_from_db() -> List[Dict[str, Any]]:
     Retrieves a list of all documents from the database with their chunk counts.
     Works with the actual pgvector table structure.
     """
-    db_url = "postgresql://myuser:mypassword@localhost:5432/my_rag_db"
+    db_url = DATABASE_URL
     conn = None
     try:
         conn = psycopg2.connect(db_url)
@@ -79,7 +80,7 @@ def get_filename_from_uuid(document_id: str) -> Optional[str]:
         logger.warning(f"⚠️ Could not check library system for UUID {document_id}: {e}")
     
     # If not found in library, try the old database system with generated UUIDs
-    conn_str = "postgresql://myuser:mypassword@localhost:5432/my_rag_db"
+    conn_str = DATABASE_URL
     conn = psycopg2.connect(conn_str)
     
     try:

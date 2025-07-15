@@ -227,12 +227,17 @@ postgres_data/
 # Document uploads and processing
 backend/data/temp/
 backend/data/uploaded_files/
+backend/data/library/documents/
+backend/data/library/metadata/
+backend/data/library/thumbnails/
+backend/data/pdf_files/
 
 # Environment variables
 .env
 .env.local
 .env.production
 .env.development
+!.env.example
 
 # Docker
 .dockerignore

@@ -13,6 +13,7 @@ from phi.embedder.ollama import OllamaEmbedder
 from pdf_reader_custom import FilteredPDFReader
 from dotenv import load_dotenv
 import logging
+from config import DATABASE_URL, OLLAMA_HOST, CHAT_MODEL, EMBEDDING_MODEL
 
 load_dotenv()
 
@@ -71,7 +72,7 @@ def create_knowledge_base():
     """Create and configure the knowledge base optimized for long books"""
     try:
         # Get database URL
-        db_url = "postgresql://myuser:mypassword@localhost:5432/my_rag_db"
+        db_url = DATABASE_URL
         
         logger.info(f"🗄️ Connecting to database with optimized configuration for long books...")
         
@@ -80,8 +81,8 @@ def create_knowledge_base():
             table_name="pdf_documents",
             db_url=db_url,
             embedder=OllamaEmbedder(
-                model="nomic-embed-text", 
-                dimensions=768  # Explicitly set correct dimensions for nomic-embed-text
+                            model=EMBEDDING_MODEL,
+            dimensions=768  # Explicitly set correct dimensions for nomic-embed-text
             ),
             # Optimizations for long book retrieval:
             search_type=SearchType.hybrid,  # Combine vector + keyword search
@@ -137,7 +138,7 @@ def initialize_knowledge_base():
     
     # Check if we should load documents
     if pdf_files:
-        db_url = "postgresql://myuser:mypassword@localhost:5432/my_rag_db"
+        db_url = DATABASE_URL
         
         # For production efficiency: check if documents already exist
         documents_exist = check_if_documents_exist(db_url)
@@ -230,7 +231,7 @@ def get_rag_agent(document_filter: str = None) -> Agent:
 
     # Create an agent that uses the specified knowledge base.
     return Agent(
-        model=Ollama(id="mistral:latest"),
+        model=Ollama(id=CHAT_MODEL),
         knowledge=knowledge_base,
         # Enable search tools
         search_knowledge=True,

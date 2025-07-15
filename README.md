@@ -88,7 +88,23 @@ git clone git@github.com:elios-cama/calibre-ai.git
 cd calibre-ai
 ```
 
-### **2. Set Up the Database**
+### **2. Set Up Environment Variables**
+
+Copy the example environment file and configure your settings:
+
+```bash
+cp .env.example .env
+# Edit .env with your preferred database credentials
+# Default values work for local development
+```
+
+**Important Environment Variables:**
+- `POSTGRES_USER`, `POSTGRES_PASSWORD`, `POSTGRES_DB` - Database credentials
+- `OLLAMA_HOST` - Ollama server URL (default: http://localhost:11434)
+- `CHAT_MODEL` - AI chat model (default: mistral:7b)
+- `EMBEDDING_MODEL` - Text embedding model (default: nomic-embed-text)
+
+### **3. Set Up the Database**
 
 Start PostgreSQL with pgvector using Docker:
 
@@ -98,7 +114,7 @@ docker-compose up -d
 
 This creates a persistent PostgreSQL database with vector extensions at `localhost:5432`.
 
-### **3. Set Up Ollama & AI Models**
+### **4. Set Up Ollama & AI Models**
 
 ```bash
 # Download and start the AI models
@@ -108,7 +124,7 @@ ollama pull nomic-embed-text  # Embedding model
 
 Ollama runs automatically as a background service at `http://localhost:11434`.
 
-### **4. Set Up the Backend**
+### **5. Set Up the Backend**
 
 ```bash
 cd backend
@@ -126,7 +142,7 @@ uvicorn main:app --reload
 
 The backend API will be available at `http://localhost:8000`.
 
-### **5. Set Up the Frontend**
+### **6. Set Up the Frontend**
 
 ```bash
 cd frontend
